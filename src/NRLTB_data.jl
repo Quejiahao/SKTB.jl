@@ -33,7 +33,7 @@ function NRLHamiltonian(s; orbitals=default_orbitals(s), cutoff=:forceshift)
       H = Al_spd
    else
         # Relatively universal!
-        data_dir = joinpath(dirname(pathof(SKTB)), "..", "nrl_data")
+        data_dir = joinpath(dirname(Base.find_package("SKTB")), "..", "nrl_data")
         cd(data_dir)
         fname = NRLFILENAME[s] # Lookup species -> filename
 
@@ -235,7 +235,7 @@ C_sp  =  NRLHamiltonian{4, Function}( 4, 4,			    # norbital, nbond
 # reduce Rc = 16.5 to 9.5
 Al_spd  =  NRLHamiltonian{9, Function}(9, 10,			        # norbital, nbond
                      16.5, 0.5, cutoff_NRL,			# Rc, lc
-                     1.108515601511,		# λ
+                     1.08515601511,		# λ
                      [-0.0368090795665,  0.394060871550,  0.394060871550,  0.394060871550,
                       1.03732517161,  1.03732517161,  1.03732517161, 1.03732517161, 1.03732517161],         	#a
                      [1.41121601477,  0.996479629379,   0.996479629379,  0.996479629379,
