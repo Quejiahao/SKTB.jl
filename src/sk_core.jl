@@ -188,8 +188,9 @@ end
 
 
 
-function _sk9_d!(U, r, hh, dhh, dmat)
+function _sk9_d!(U, r, hh, dhh, dmat; dim = 3)
    l, m, n = U[1], U[2], U[3]
+   ll, lm, ln, mm, mn, nn = l*l, l*m, l*n, m*m, m*n, n*n
    dl = ( (1.0-ll)/r ,     - lm/r ,     - ln/r )
    dm = (     - lm/r , (1.0-mm)/r ,     - mn/r )
    dn = (     - ln/r ,     - mn/r , (1.0-nn)/r )
