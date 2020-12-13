@@ -146,6 +146,17 @@ FermiDiracSmearing(beta; eF=0.0, Ne = 0.0, fixed_eF = true) =
 occupancy(fd::FermiDiracSmearing, epsn::Number) = fermidirac(epsn, fd.eF, fd.beta)
 occupancy(fd::FermiDiracSmearing, epsn::Number, eF) = fermidirac(epsn, eF, fd.beta)
 energy(fd::FermiDiracSmearing, epsn::Number) = fermidirac(epsn, fd.eF, fd.beta) * epsn
+# avoid NaN
+function grad(f::FermiDiracSmearing, epsn::Real)
+   exp_num = (epsn - f.eF) * f.beta
+   exp_item = exp(exp_num)
+   if exp_num > 0
+      exp_item_inv = exp(-exp_num)
+      return (exp_item_inv + 1 - epsn * f.beta) / (exp_item + 2 + exp_item_inv)
+   else
+      return (1 + (1 - epsn * f.beta) * exp_item) / (exp_item ^ 2 + 2 * exp_item + 1)
+   end
+end
 
 function update!(at::AbstractAtoms, f::FermiDiracSmearing, tbm::TBModel)
    if !f.fixed_eF
