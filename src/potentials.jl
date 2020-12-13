@@ -7,7 +7,9 @@ export ZeroTemperature,
       ZeroTemperatureGrand,
       MerminFreeEnergy,
       GrandPotential,
-      FermiDiracSmearing
+      FermiDiracSmearing,
+      ZeroT,
+      ZeroTGrand
 
 # a smearing function can be
 #  [1] 0T or finite T
@@ -218,9 +220,9 @@ end
 
 function fermilevel(tbm::TBModel, at::AbstractAtoms, Nel)
    e = spectrum(tbm, at) |> sort
-   Nel = length(e) ÷ 2
-   # Nel = floor(Int, Nel)
-   return 0.5 * (e[Nel] + e[Nel+1])
+   # Nel = length(e) ÷ 2
+   nf = floor(Int, Nel * length(tbm.bzquad) / 2)
+   return 0.5 * (e[nf] + e[nf + 1])
 end
 
 abstract type ZeroTPotential <: ChemicalPotential end
