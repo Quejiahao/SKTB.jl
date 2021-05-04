@@ -2,3 +2,6 @@
 *.jl.*.cov
 *.jl.mem
 .DS_Store
+.vscode
+_git2_a07056
+nrl_data/*_par*
